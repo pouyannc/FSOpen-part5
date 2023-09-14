@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import Login from './components/Login'
 import loginService from './services/login'
 import CreatePost from './components/CreatePost'
 import Alert from './components/Alert'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -15,6 +16,8 @@ const App = () => {
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
   const [showAlert, setShowAlert] = useState(null);
+
+  const createPostRef = useRef();
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -49,6 +52,8 @@ const App = () => {
     const req = { title, author, url };
 
     const res = await blogService.create(req);
+
+    createPostRef.current.toggleVisibility();
     setBlogs(blogs.concat(res));
     setShowAlert(`New entry created: ${res.title}`);
 
@@ -80,7 +85,9 @@ const App = () => {
       ? <Login username={username} password={password} handleSubmit={handleLoginSubmit} setPassword={setPassword} setUsername={setUsername} />
       : <div>
           <div>logged in as {user.username} <button onClick={handleLogout}>logout</button></div>
-          <CreatePost handleSubmit={handleCreate} title={title} author={author} url={url} setTitle={setTitle} setAuthor={setAuthor} setUrl={setUrl} />
+          <Togglable label={'Create new'} ref={createPostRef}>
+            <CreatePost handleSubmit={handleCreate} title={title} author={author} url={url} setTitle={setTitle} setAuthor={setAuthor} setUrl={setUrl} />
+          </Togglable>
           <Blog blogs={blogs} />
         </div>}
     </>
