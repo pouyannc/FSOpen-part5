@@ -16,13 +16,13 @@ const Blog = ({ blog, increaseLikes, removeBlog }) => {
     setView(!view);
   }
 
-  const handleLike = (e) => {
+  const handleLike = () => {
     const req = {
       title: blog.title,
       author: blog.author,
       url: blog.url,
       likes:  likes + 1,
-      user: blog.user,
+      user: blog.user.id,
     };
     increaseLikes(req, blog.id);
     setLikes(likes + 1);
