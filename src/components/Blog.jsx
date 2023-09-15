@@ -1,6 +1,8 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 
-const Blog = ({ blog, increaseLikes, removeBlog, allowRemove }) => {
+const Blog = ({
+  blog, increaseLikes, removeBlog, allowRemove,
+}) => {
   const [view, setView] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
 
@@ -10,29 +12,29 @@ const Blog = ({ blog, increaseLikes, removeBlog, allowRemove }) => {
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
-  }
+  };
 
   const toggleInfo = () => {
     setView(!view);
-  }
+  };
 
   const handleLike = () => {
     const req = {
       title: blog.title,
       author: blog.author,
       url: blog.url,
-      likes:  likes + 1,
+      likes: likes + 1,
       user: blog.user.id,
     };
     increaseLikes(req, blog.id);
     setLikes(likes + 1);
-  }
+  };
 
   const handleRemove = () => {
     if (confirm(`Delete blog: ${blog.title}?`)) {
       removeBlog(blog.id);
     }
-  }
+  };
 
   return (
     <div>
@@ -47,8 +49,8 @@ const Blog = ({ blog, increaseLikes, removeBlog, allowRemove }) => {
           <button onClick={handleRemove} style={{ display: allowRemove ? '' : 'none' }}>remove</button>
         </div>
       </div>
-    </div>  
-  )
-}
+    </div>
+  );
+};
 
-export default Blog
+export default Blog;
