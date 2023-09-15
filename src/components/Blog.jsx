@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Blog = ({ blog, increaseLikes, removeBlog }) => {
+const Blog = ({ blog, increaseLikes, removeBlog, allowRemove }) => {
   const [view, setView] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
 
@@ -44,7 +44,7 @@ const Blog = ({ blog, increaseLikes, removeBlog }) => {
           <a href={blog.url}>{blog.url}</a>
           <div>Likes: {likes} <button onClick={handleLike}>like</button></div>
           <div>{blog.author}</div>
-          <button onClick={handleRemove}>remove</button>
+          <button onClick={handleRemove} style={{ display: allowRemove ? '' : 'none' }}>remove</button>
         </div>
       </div>
     </div>  

@@ -71,6 +71,8 @@ const App = () => {
     }
   }, [])
 
+  console.log(user)
+
   return (
     <>
       {showAlert && <Alert text={showAlert} />}
@@ -84,7 +86,7 @@ const App = () => {
           </Togglable>
           <h2>Blogs</h2>
           {blogs.map((b) => (
-            <Blog key={b.id} blog={b} increaseLikes={increaseLikes} removeBlog={removeBlog} />
+            <Blog key={b.id} blog={b} increaseLikes={increaseLikes} removeBlog={removeBlog} allowRemove={user.username === b.user.username} />
           ))}
         </div>}
     </>
