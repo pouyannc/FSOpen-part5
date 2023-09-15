@@ -44,6 +44,11 @@ const App = () => {
     }, 4000);
   }
 
+  const increaseLikes = async (req, blogId) => {
+    const resBlog = await blogService.update(req, blogId);
+    return resBlog;
+  }
+
   useEffect(() => {
     const fetchBlogs = async () => {
       const allBlogs = await blogService.getAll();
@@ -72,7 +77,7 @@ const App = () => {
           </Togglable>
           <h2>Blogs</h2>
           {blogs.map((b) => (
-            <Blog key={b.id} blog={b} />
+            <Blog key={b.id} blog={b} increaseLikes={increaseLikes} />
           ))}
         </div>}
     </>
