@@ -49,6 +49,12 @@ const App = () => {
     return resBlog;
   }
 
+  const removeBlog = async (id) => {
+    await blogService.remove(id);
+    const updatedBlogs = blogs.filter((b) => b.id !== id);
+    setBlogs(updatedBlogs);
+  }
+
   useEffect(() => {
     const fetchBlogs = async () => {
       const allBlogs = await blogService.getAll();
@@ -77,7 +83,7 @@ const App = () => {
           </Togglable>
           <h2>Blogs</h2>
           {blogs.map((b) => (
-            <Blog key={b.id} blog={b} increaseLikes={increaseLikes} />
+            <Blog key={b.id} blog={b} increaseLikes={increaseLikes} removeBlog={removeBlog} />
           ))}
         </div>}
     </>
