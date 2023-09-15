@@ -40,13 +40,15 @@ const Blog = ({
     <div>
       <div style={blogStyle}>
         <div>
-          {blog.title} <button onClick={toggleInfo}>{view ? 'close' : 'view'}</button>
+          {blog.title} <button type="button" onClick={toggleInfo}>{view ? 'close' : 'view'}</button>
         </div>
-        <div style={{ display: view ? '' : 'none' }} >
+        <div>By {blog.author}</div>
+        <div style={{ display: view ? '' : 'none' }}>
           <a href={blog.url}>{blog.url}</a>
-          <div>Likes: {likes} <button onClick={handleLike}>like</button></div>
-          <div>{blog.author}</div>
-          <button onClick={handleRemove} style={{ display: allowRemove ? '' : 'none' }}>remove</button>
+          <div>
+            Likes: {likes} <button type="button" onClick={handleLike}>like</button>
+          </div>
+          <button type="button" onClick={handleRemove} style={{ display: allowRemove ? '' : 'none' }}>remove</button>
         </div>
       </div>
     </div>
