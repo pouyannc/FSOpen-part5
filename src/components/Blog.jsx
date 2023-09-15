@@ -1,10 +1,33 @@
-import React from "react";
+import { useState } from "react";
+import Togglable from "./Togglable";
 
-const Blog = ({ blogs }) => {
+const Blog = ({ blog }) => {
+  const [view, setView] = useState(false);
+
+  const blogStyle = {
+    padding: 5,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5,
+  }
+
+  const toggleInfo = () => {
+    setView(!view);
+  }
+
   return (
     <div>
-      <h2>Blogs</h2>
-      {blogs.map(blog => <div key={blog.id}> {blog.title} | By: {blog.author} </div>)}
+      <div style={blogStyle}>
+        <div>
+          {blog.title} <button onClick={toggleInfo}>{view ? 'close' : 'view'}</button>
+        </div>
+        <div style={{ display: view ? '' : 'none' }} >
+          <a href={blog.url}>{blog.url}</a>
+          <div>Likes: {blog.likes} <button>like</button></div>
+          <div>{blog.author}</div>
+        </div>
+      </div>
     </div>  
   )
 }

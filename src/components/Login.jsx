@@ -1,6 +1,17 @@
-import React from 'react'
+import { useState } from "react"
 
-const Login = ({ username, password, handleSubmit, setUsername, setPassword }) => {
+const Login = ({ login }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    login({ username, password });
+
+    setUsername('');
+    setPassword('');
+  }
 
   return (
     <>

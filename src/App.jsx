@@ -9,35 +9,23 @@ import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
   const [showAlert, setShowAlert] = useState(null);
 
   const createPostRef = useRef();
 
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-
+  const login = async (req) => {
     try{
-      const loginRes = await loginService({ username, password });
+      const loginRes = await loginService(req);
       blogService.setToken(loginRes.token);
       setUser(loginRes);
       window.localStorage.setItem('loggedUser', JSON.stringify(loginRes));
-      setUsername('');
-      setPassword('');
     } catch(error) {
       setShowAlert('wrong username or password');
-
       setTimeout(() => {
         setShowAlert(null);
       }, 4000);
     }
-
-    
   }
 
   const handleLogout = (e) => {
@@ -45,18 +33,12 @@ const App = () => {
     setUser(null);
   }
 
-  const handleCreate = async (e) => {
-    e.preventDefault();
-    console.log(`creating post`)
-
-    const req = { title, author, url };
-
+  const createNew = async (req) => {
+    createPostRef.current.toggleVisibility();
     const res = await blogService.create(req);
 
-    createPostRef.current.toggleVisibility();
     setBlogs(blogs.concat(res));
     setShowAlert(`New entry created: ${res.title}`);
-
     setTimeout(() => {
       setShowAlert(null);
     }, 4000);
@@ -82,18 +64,18 @@ const App = () => {
       {showAlert && <Alert text={showAlert} />}
 
       {!user
-      ? <Login username={username} password={password} handleSubmit={handleLoginSubmit} setPassword={setPassword} setUsername={setUsername} />
+      ? <Login login={login} />
       : <div>
           <div>logged in as {user.username} <button onClick={handleLogout}>logout</button></div>
           <Togglable label={'Create new'} ref={createPostRef}>
-            <CreatePost handleSubmit={handleCreate} title={title} author={author} url={url} setTitle={setTitle} setAuthor={setAuthor} setUrl={setUrl} />
+            <CreatePost createNew={createNew} />
           </Togglable>
-          <Blog blogs={blogs} />
+          <h2>Blogs</h2>
+          {blogs.map((b) => (
+            <Blog key={b.id} blog={b} />
+          ))}
         </div>}
     </>
-    
-
-    
   )
 }
 
