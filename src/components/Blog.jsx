@@ -43,7 +43,7 @@ const Blog = ({
           {blog.title} <button type="button" onClick={toggleInfo}>{view ? 'close' : 'view'}</button>
         </div>
         <div>By {blog.author}</div>
-        <div style={{ display: view ? '' : 'none' }}>
+        <div className="moreInfo" style={{ display: view ? '' : 'none' }}>
           <a href={blog.url}>{blog.url}</a>
           <div>
             Likes: {likes} <button type="button" onClick={handleLike}>like</button>
