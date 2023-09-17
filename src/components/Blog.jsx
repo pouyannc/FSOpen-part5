@@ -38,7 +38,7 @@ const Blog = ({
 
   return (
     <div>
-      <div style={blogStyle}>
+      <div className="blog" style={blogStyle}>
         <div>
           {blog.title} <button type="button" onClick={toggleInfo}>{view ? 'close' : 'view'}</button>
         </div>
